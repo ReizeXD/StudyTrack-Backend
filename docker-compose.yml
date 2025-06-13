@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: postgres:14
+    container_name: StudyTrack
+    restart: always
+    environment:
+      - POSTGRES_DB=${DB}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - ${PORTS}
+    volumes:
+      - .\init.sql:\docker-entrypoint-initdb.d\init.sql
