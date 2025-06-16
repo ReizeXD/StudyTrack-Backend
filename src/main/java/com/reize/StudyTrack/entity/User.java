@@ -15,10 +15,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-
-
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import jakarta.persistence.EnumType;
 
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "app_user")
@@ -47,14 +48,20 @@ public class User {
     
     @Column(name = "points", nullable = false)
     @NotNull(message = "Os pontos não podem ser nulos")
-    private int points = 0;
+    private Integer points = 0;
     
-    @Column(name = "points", nullable = false)
+    @Column(name = "register_date", nullable = false)
     @NotNull(message = "A data não pode ser nula")
-    private LocalDateTime registerDate;
+    private LocalDateTime registerDate = LocalDateTime.now();
     
     @Enumerated(EnumType.STRING)
     @Column(name = "level", nullable = false)
     @NotNull(message = "O nível não pode ser nulo")
     private Level level = Level.BEGINNER;
+
+    public User(String name, String email, String password){
+        this.name= name;
+        this.email = email;
+        this.password = password;
+    }
 }
