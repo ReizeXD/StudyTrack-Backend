@@ -1,9 +1,6 @@
 package com.reize.StudyTrack.entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import org.hibernate.annotations.ManyToAny;
 
 import com.reize.StudyTrack.enumerator.TirednessLevel;
 
@@ -30,7 +27,7 @@ public class Progress {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="goal_id")
+    @JoinColumn(name="goal_id", nullable = false)
     @ToString.Exclude
     private Goal goal;
 

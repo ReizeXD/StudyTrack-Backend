@@ -1,7 +1,6 @@
 package com.reize.StudyTrack.entity;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,26 +21,27 @@ import lombok.ToString;
 @Entity
 public class Goal {
     
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="user_id", nullable = false)
     @ToString.Exclude
     private User user;
-
+    
     @Column(name = "name", nullable = false)
     @NotNull(message = "O nome não pode ser nulo")
     private String name;
-
+    
     @Column(name = "start_date", nullable = false)
     @NotNull(message = "A data não pode ser nula")
     private LocalDate startDate;
     
     @Column(name = "end_date")
     private LocalDate endDate;
-
+    
     @ManyToOne
     @JoinColumn(name = "subject", nullable = false)
     @NotNull(message = "A matéria não pode ser nula")
@@ -50,15 +50,29 @@ public class Goal {
     @Column(name = "expected_hours", nullable=false)
     @NotNull(message = "A hora não pode ser nula")
     private Integer expectedHoursPerDay;
-
+    
     @Column(name = "target_time")
     private Integer targetTimeInMinutes=0;
-
+    
     private Boolean isActive = true;
-
+    
     private Boolean isPublic = true;
-
+    
     @OneToMany(mappedBy = "goal", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Progress> progress = new ArrayList<>();
-
+    
+    public Goal(User user,String name,
+           LocalDate startDate, LocalDate endDate,
+            Subject subject,
+             Integer expectedHoursPerDay, Boolean isPublic) {
+        this.user=user;
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.subject = subject;
+        this.expectedHoursPerDay = expectedHoursPerDay;
+        this.isPublic = isPublic;
+    }
+    
+    
 }

@@ -1,7 +1,6 @@
 package com.reize.StudyTrack.auth;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -44,6 +43,8 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
 
                 // Define o objeto de autenticação no contexto de segurança do Spring Security
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                logger.info("Usuário autenticado: " + userDetails.getUsername());
+
             } else {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.setContentType("application/json");
