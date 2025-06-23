@@ -1,0 +1,34 @@
+package com.reize.StudyTrack.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.reize.StudyTrack.dto.mapper.Mapper;
+import com.reize.StudyTrack.dto.progress.ProgressRequestDTO;
+import com.reize.StudyTrack.entity.Progress;
+import com.reize.StudyTrack.service.ProgressService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/progress")
+public class ProgressController {
+    
+    @Autowired
+    ProgressService progressService;
+
+    @PostMapping("/save")
+    public ResponseEntity<?> saveProgress(@RequestBody @Valid ProgressRequestDTO progressRequestDTO){
+        try {
+            Progress progress = progressService.saveProgress(progressRequestDTO);
+            ProgressRequestDTO progressResponseDTO = Mapper.toProgressDTO(progress);
+            return ResponseEntity.ok(progressResponseDTO);////
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+}
