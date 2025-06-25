@@ -43,7 +43,7 @@ public class UserService {
         try {
             return userRepository.save(user);
         } catch (DataIntegrityViolationException e) {
-            throw new RuntimeException("Email ja cadastrado");
+            throw new RuntimeException("Email ja cadastrado" + e.getMessage());
         }
 
     }

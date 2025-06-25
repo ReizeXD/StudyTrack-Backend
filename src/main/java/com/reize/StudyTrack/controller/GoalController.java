@@ -2,13 +2,16 @@ package com.reize.StudyTrack.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reize.StudyTrack.dto.goal.GoalRequestDTO;
 import com.reize.StudyTrack.dto.goal.GoalResponseDTO;
+import com.reize.StudyTrack.dto.goal.GoalUpdateDTO;
 import com.reize.StudyTrack.dto.mapper.Mapper;
 import com.reize.StudyTrack.entity.Goal;
 import com.reize.StudyTrack.service.GoalService;
@@ -27,6 +30,17 @@ public class GoalController {
         try {
             Goal newGoal = this.goalService.saveGoal(goalRequestDTO);
             GoalResponseDTO goalResponseDTO  = Mapper.toGoalDTO(newGoal);
+            return ResponseEntity.ok(goalResponseDTO);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateGoal(@PathVariable Long id,@RequestBody @Valid GoalUpdateDTO goalUpdateDTO){
+        try {
+            Goal updateGoal= this.goalService.updateGoal(id, goalUpdateDTO);
+            GoalResponseDTO goalResponseDTO = Mapper.toGoalDTO(updateGoal);
             return ResponseEntity.ok(goalResponseDTO);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
