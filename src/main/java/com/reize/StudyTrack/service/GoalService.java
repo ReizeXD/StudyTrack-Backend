@@ -27,17 +27,19 @@ public class GoalService {
 
     public Goal saveGoal(GoalRequestDTO goalRequestDTO){
         User user = sharedService.findUser();
-       
+        
         Subject subject =subjectRepository.findById(goalRequestDTO.subjectId()).orElseThrow(() -> new EntityNotFoundException("Essa matéria não existe"));
-
+        
         Goal newGoal = new Goal(user,goalRequestDTO.name(),goalRequestDTO.startDate(),goalRequestDTO.endDate(),subject, goalRequestDTO.expectedHoursPerDay(),goalRequestDTO.isPublic());
-
+        
         return goalRepository.save(newGoal);
     }
+    
     public Goal updateGoal(Long id, GoalUpdateDTO goalUpdateDTO){
-        SecurityContextHolder.getContext().getAuthentication();
-
+        User user = sharedService.findUser();
+        
         return goalRepository.findById(id).map(existingGoal ->{
+            if(!user.getId().equals(existingGoal.getUser().getId())) throw new RuntimeException("Você não tem permissão para atualizar esta meta.");
             if(!goalUpdateDTO.name().isBlank()) existingGoal.setName(goalUpdateDTO.name());
             if(goalUpdateDTO.startDate()!= null) existingGoal.setStartDate(goalUpdateDTO.startDate());
             if(goalUpdateDTO.endDate()!= null) existingGoal.setEndDate(goalUpdateDTO.endDate());

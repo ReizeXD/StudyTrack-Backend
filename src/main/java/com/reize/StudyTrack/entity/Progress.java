@@ -54,4 +54,5 @@ public class Progress {
         this.timeStudied = timeStudied;
     }
     
+    public Progress(){}
 }

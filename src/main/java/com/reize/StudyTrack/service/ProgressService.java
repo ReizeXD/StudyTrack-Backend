@@ -1,9 +1,11 @@
 package com.reize.StudyTrack.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.reize.StudyTrack.dto.progress.ProgressRequestDTO;
+import com.reize.StudyTrack.dto.progress.ProgressUpdateDTO;
 import com.reize.StudyTrack.entity.Goal;
 import com.reize.StudyTrack.entity.Progress;
 import com.reize.StudyTrack.entity.User;
@@ -33,5 +35,18 @@ public class ProgressService {
         Progress progress = new Progress(goal, progressRequestDTO.date(), progressRequestDTO.tirednessLevel(), progressRequestDTO.timeStudied());
 
         return progressRepository.save(progress);
+    }
+
+    public Progress updateProgress(Long id, ProgressUpdateDTO progressUpdateDTO){
+        User user = sharedService.findUser();
+
+        return progressRepository.findById(id).map(existingProgress ->{
+            if(!user.getId().equals(existingProgress.getGoal().getUser().getId())) throw new RuntimeException("Você não tem permissão para atualizar este progressp.");
+            if(progressUpdateDTO.date() != null) existingProgress.setDate(progressUpdateDTO.date());
+            if(progressUpdateDTO.timeStudied() != null) existingProgress.setTimeStudied(progressUpdateDTO.timeStudied());
+            if(progressUpdateDTO.tirednessLevel() != null) existingProgress.setTirednessLevel(progressUpdateDTO.tirednessLevel());
+
+            return progressRepository.save(existingProgress);
+        }).orElseThrow(() -> new EntityNotFoundException("Meta não encontrada com o ID: "+ id));
     }
 }
