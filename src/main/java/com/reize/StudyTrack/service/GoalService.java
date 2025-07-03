@@ -1,7 +1,8 @@
 package com.reize.StudyTrack.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.reize.StudyTrack.dto.goal.GoalRequestDTO;
@@ -50,6 +51,32 @@ public class GoalService {
             if(goalUpdateDTO.isActive()!=null) existingGoal.setIsActive(goalUpdateDTO.isActive());
             return goalRepository.save(existingGoal);
         }).orElseThrow(()-> new EntityNotFoundException("Meta não encontrada com o ID: "+ id));
+        
+    }
+    
+    public List<Goal> findAll(){
+        User user = sharedService.findUser();
+
+        List<Goal> goals = this.goalRepository.findAllByUserId(user.getId());
+        return goals;
+    }
+    
+    public Goal findById(Long id){
+        User user = sharedService.findUser();
+        
+        Goal goal = this.goalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Essa meta não existe"));
+        
+        if(!goal.getUser().getId().equals(user.getId())) throw new RuntimeException("Essa meta não é sua");
+        
+        return goal;
+    }
+    
+    public List<Goal> findAllActive(){
+        User user = sharedService.findUser();
+        
+        List<Goal> goals = this.goalRepository.findAllByUserIdAndIsActiveTrue(user.getId());
+        
+        return goals;
 
     }
 }

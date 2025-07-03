@@ -6,6 +6,8 @@ import com.reize.StudyTrack.dto.subject.SubjectDTO;
 import com.reize.StudyTrack.dto.user.UserNameDTO;
 
 public record GoalResponseDTO(
+    Long id,
+
     UserNameDTO user,
 
     String name,
