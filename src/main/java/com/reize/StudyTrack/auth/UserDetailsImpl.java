@@ -33,7 +33,11 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public String getUsername() {
         return user.getEmail();
-    } // Retorna o nome de usuário do usuário que criamos anteriormente
+    } // Retorna o email de usuário do usuário que criamos anteriormente
+
+    public String getName(){
+        return user.getName();
+    }
 
     public Long getId(){
         return user.getId();

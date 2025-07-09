@@ -1,7 +1,6 @@
 package com.reize.StudyTrack.dto.progress;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import com.reize.StudyTrack.enumerator.TirednessLevel;
 
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +13,7 @@ public record ProgressRequestDTO(
     String goalName,
 
     @NotNull
-    LocalDateTime date,
+    LocalDate date,
     @NotNull
     TirednessLevel tirednessLevel, 
     @NotNull

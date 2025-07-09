@@ -41,6 +41,14 @@ public class Mapper {
         return listGoals;
     }
 
+    public static List<ProgressRequestDTO> toListProgressDTO(List<Progress> progresses){
+        List<ProgressRequestDTO> listGoals = new ArrayList<>();
+        for(Progress progress : progresses){
+            listGoals.add(toProgressDTO(progress));
+        }
+        return listGoals;
+    }
+
     public static List<SubjectDTO> toListSubjectDTO(List<Subject> subjects){
         List<SubjectDTO> listSubject = new ArrayList<>();
         for(Subject subject : subjects){

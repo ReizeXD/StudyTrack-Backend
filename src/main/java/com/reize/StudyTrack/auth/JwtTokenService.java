@@ -26,7 +26,9 @@ public class JwtTokenService {
                     .withIssuer(ISSUER) // Define o emissor do token
                     .withIssuedAt(creationDate()) // Define a data de emissão do token
                     .withExpiresAt(expirationDate()) // Define a data de expiração do token
-                    .withSubject(user.getUsername()) // Define o assunto do token (neste caso, o nome de usuário)
+                    .withSubject(user.getUsername()) // Define o assunto do token (neste caso, o email de usuário)
+                    .withClaim("name", user.getName()) // Retorna o nome de usuario
+                    .withClaim("id", user.getId()) // Retorna o id de usuario
                     .sign(algorithm); // Assina o token usando o algoritmo especificado
         } catch (JWTCreationException exception){
             throw new JWTCreationException("Erro ao gerar token.", exception);

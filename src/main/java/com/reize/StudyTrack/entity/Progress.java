@@ -1,7 +1,6 @@
 package com.reize.StudyTrack.entity;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import com.reize.StudyTrack.enumerator.TirednessLevel;
 
 import jakarta.persistence.Column;
@@ -34,7 +33,7 @@ public class Progress {
     
     @Column(name = "date", nullable = false)
     @NotNull(message = "A data não pode ser nula")
-    private LocalDateTime date;
+    private LocalDate date;
     
     @Enumerated(EnumType.STRING)
     @Column(name = "tiredness_level", nullable = false)
@@ -45,7 +44,7 @@ public class Progress {
     @NotNull(message = "O tempo estudado não pode ser nulo")
     private Integer timeStudied;
     
-    public Progress(Goal goal, @NotNull(message = "A data não pode ser nula") LocalDateTime date,
+    public Progress(Goal goal, @NotNull(message = "A data não pode ser nula") LocalDate date,
             @NotNull(message = "O nivel de cansaço não pode ser nulo") TirednessLevel tirednessLevel,
             @NotNull(message = "O tempo estudado não pode ser nulo") Integer timeStudied) {
         this.goal = goal;
