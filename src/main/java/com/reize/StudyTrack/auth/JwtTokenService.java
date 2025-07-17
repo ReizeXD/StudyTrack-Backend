@@ -1,6 +1,7 @@
 package com.reize.StudyTrack.auth;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -56,5 +57,24 @@ public class JwtTokenService {
     private Instant expirationDate() {
         return ZonedDateTime.now(ZoneId.of("America/Recife")).plusHours(4).toInstant();
     }
+
+    public String generatePasswordResetToken(String email) {
+        Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
+        return JWT.create()
+            .withSubject(email)
+            .withIssuer("studytrack-api")
+            .withExpiresAt(LocalDateTime.now().plusMinutes(30).atZone(ZoneId.systemDefault()).toInstant())
+            .sign(algorithm);
+    }
+
+    public String getEmailFromResetToken(String token) {
+        Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
+        return JWT.require(algorithm)
+                .withIssuer("studytrack-api")
+                .build()
+                .verify(token)
+                .getSubject();
+    }
+
 
 }

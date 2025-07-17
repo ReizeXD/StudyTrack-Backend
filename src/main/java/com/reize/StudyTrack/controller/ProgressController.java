@@ -2,7 +2,6 @@ package com.reize.StudyTrack.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,13 +19,15 @@ import com.reize.StudyTrack.entity.Progress;
 import com.reize.StudyTrack.service.ProgressService;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/progress")
 public class ProgressController {
     
-    @Autowired
-    ProgressService progressService;
+    
+    private final ProgressService progressService;
 
     @PostMapping("/save")
     public ResponseEntity<?> saveProgress(@RequestBody @Valid ProgressRequestDTO progressRequestDTO){

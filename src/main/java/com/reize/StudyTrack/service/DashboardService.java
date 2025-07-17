@@ -2,28 +2,23 @@ package com.reize.StudyTrack.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reize.StudyTrack.dto.dashboard.DashboardOverviewDTO;
 import com.reize.StudyTrack.entity.Goal;
 import com.reize.StudyTrack.entity.User;
 import com.reize.StudyTrack.repository.GoalRepository;
-import com.reize.StudyTrack.repository.ProgressRepository;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @Service
 public class DashboardService {
     
     private final GoalRepository goalRepository;
-    private final ProgressRepository progressRepository;
 
-    @Autowired
-    SharedService sharedService;
-
-    public DashboardService(GoalRepository goalRepository, ProgressRepository progressRepository){
-        this.goalRepository = goalRepository;
-        this.progressRepository = progressRepository;
-    }
+    
+    private final SharedService sharedService;
    
     public DashboardOverviewDTO getOverview(){
         User user = sharedService.findUser();

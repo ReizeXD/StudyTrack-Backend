@@ -2,7 +2,6 @@ package com.reize.StudyTrack.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reize.StudyTrack.dto.goal.GoalRequestDTO;
@@ -13,18 +12,20 @@ import com.reize.StudyTrack.entity.User;
 import com.reize.StudyTrack.repository.GoalRepository;
 import com.reize.StudyTrack.repository.SubjectRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 @Service
 public class GoalService {
     
-    @Autowired
-    GoalRepository goalRepository;
+    
+    private final GoalRepository goalRepository;
 
-    @Autowired
-    SharedService sharedService;
+    
+    private final SharedService sharedService;
 
-    @Autowired
-    SubjectRepository subjectRepository;
+    
+    private final SubjectRepository subjectRepository;
 
     public Goal saveGoal(GoalRequestDTO goalRequestDTO){
         User user = sharedService.findUser();

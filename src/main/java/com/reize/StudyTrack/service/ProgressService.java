@@ -2,7 +2,6 @@ package com.reize.StudyTrack.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reize.StudyTrack.dto.progress.ProgressRequestDTO;
@@ -13,18 +12,20 @@ import com.reize.StudyTrack.entity.User;
 import com.reize.StudyTrack.repository.GoalRepository;
 import com.reize.StudyTrack.repository.ProgressRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 @Service
 public class ProgressService {
 
-    @Autowired
-    ProgressRepository progressRepository;
+    
+    private final ProgressRepository progressRepository;
 
-    @Autowired
-    SharedService sharedService;
+    
+    private final SharedService sharedService;
 
-    @Autowired
-    GoalRepository goalRepository;
+    
+    private final GoalRepository goalRepository;
 
     public Progress saveProgress(ProgressRequestDTO progressRequestDTO){
         User user = sharedService.findUser();

@@ -2,7 +2,6 @@ package com.reize.StudyTrack.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,13 +19,15 @@ import com.reize.StudyTrack.entity.Goal;
 import com.reize.StudyTrack.service.GoalService;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/goals")
 public class GoalController {
 
-    @Autowired
-    GoalService goalService;
+    
+    private final GoalService goalService;
 
     @PostMapping("/save")
     public ResponseEntity<?> saveGoal(@RequestBody @Valid GoalRequestDTO goalRequestDTO){

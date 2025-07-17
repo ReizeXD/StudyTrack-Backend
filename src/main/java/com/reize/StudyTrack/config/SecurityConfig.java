@@ -30,7 +30,8 @@ public class SecurityConfig {
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/users/login", "/users/save").permitAll()
+                .requestMatchers("/users/login", "/users/save", "/users/recovery",
+                                    "/users/recovery/reset").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
