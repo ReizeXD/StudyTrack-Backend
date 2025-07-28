@@ -1,4 +1,4 @@
-# 📕Study Track - FrontEnd
+# 📕Study Track - BackEnd
 
 *[🔗 Repositório frontend.](https://github.com/ReizeXD/StudyTrack-Frontend.git)*
 
